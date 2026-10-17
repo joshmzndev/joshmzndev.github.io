@@ -36,7 +36,7 @@ export function ProjectCard({title, description, thumbnail, href}) {
         <Image src={thumbnail} height={180} alt={title} withPlaceholder/>
       </Card.Section>
       <Title order={2} size="h4" mt="md" className="title">{title}</Title>
-      <Text size="sm" color="dimmed" mt="xs" className="text">{description}</Text>
+      <Text mt="xs" className="text projectDescription">{description}</Text>
     </Card>
   );
 }
