@@ -5,7 +5,7 @@ Personal portfolio site for Josh Manzano. Single-page Create React App (react-sc
 ## Commands
 
 ```bash
-npm install      # no lockfile is committed (package-lock.json is gitignored)
+npm ci           # install exact versions from the committed package-lock.json
 npm start        # dev server on localhost:3000
 npm run build    # production build to /build
 npm test         # Jest + React Testing Library (use CI=true for a single run)
@@ -17,7 +17,7 @@ There is no CI, so deploys only happen by running `npm run deploy` locally. Open
 ## Structure
 
 - `src/App.js` contains the single page:
-  - Centered header: small `Avatar` photo, name, bio, and `SocialButton` icon links to GitHub, LinkedIn and YouTube (the `name` prop becomes the `aria-label`).
+  - Centered header: small `Avatar` photo, name (the page's only `<h1>`), `@joshmzndev` handle, bio, and `SocialButton` icon links to GitHub, LinkedIn and YouTube (the `name` prop becomes the `aria-label`, and each link has `rel="me"`).
   - Responsive grid of `ProjectCard`s: three columns on desktop, two on tablet, one on phone. Each card is an `<a>` that opens in a new tab.
 - `src/projects.js` is the project list (title, one-sentence description, thumbnail, href). **Add or edit projects here.** A `thumbnail` is a filename in `public/`, and `null` shows Mantine's image placeholder.
 - `src/index.js` wraps `App` in `MantineProvider`.
@@ -28,9 +28,12 @@ There is no CI, so deploys only happen by running `npm run deploy` locally. Open
 
 ## Conventions and gotchas
 
-- The handle is `joshmzndev` (domain, GitHub, YouTube). The LinkedIn and Mastodon URLs still use `joshmanzano` on purpose; see `REVIEW.md`.
+- The handle is `joshmzndev` everywhere (domain, GitHub, LinkedIn, YouTube, Mastodon).
+- **SEO lives in `public/index.html`**, because CRA renders the page client-side and crawlers read the static HTML first. It holds the Person/ProfilePage JSON-LD (`alternateName: "joshmzndev"`, `sameAs` profile list), Open Graph and Twitter tags, `rel="me"` links, and a `<noscript>` fallback. When adding or changing a profile, update the social links in `App.js` **and** `sameAs`, `rel="me"` and `<noscript>` in `index.html`.
+- `public/robots.txt` allows all crawlers and points to `public/sitemap.xml`. Add new pages to the sitemap.
+- Unreferenced files in `public/` (old logos, the PDF, `scroll.png`) are used elsewhere by direct link. Don't delete them.
 - Use the **Mantine v6** API (`Col`, `leftIcon`, `position=`, `align=` props). Don't upgrade to v7 casually.
 - Icons come from `@tabler/icons-react`.
 - `typescript@4.9` is a devDependency only so that `eslint-plugin-jest` and `@typescript-eslint` load. Without it, `npm run build` fails with `Environment key "jest/globals" is unknown`. Keep it on v4, the latest version react-scripts 5 accepts.
 - `src/setupTests.js` stubs `ResizeObserver`, which some Mantine components need in jsdom.
-- In tests, prefer `getByText` and `getByLabelText` over `getByRole(..., { name })`. The unpinned testing-library tree throws `parameter 1 is not of type 'Node'` on accessible-name lookups.
+- In tests, prefer `getByText` and `getByLabelText` over `getByRole(..., { name })`. The installed testing-library versions throw `parameter 1 is not of type 'Node'` on accessible-name lookups.

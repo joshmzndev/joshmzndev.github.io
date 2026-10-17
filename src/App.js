@@ -10,7 +10,7 @@ export function SocialButton({name, href, icon}) {
       aria-label={name}
       href={href}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="me noopener noreferrer"
       color="dark"
       leftIcon={icon}
       variant="subtle"
@@ -35,7 +35,7 @@ export function ProjectCard({title, description, thumbnail, href}) {
       <Card.Section>
         <Image src={thumbnail} height={180} alt={title} withPlaceholder/>
       </Card.Section>
-      <Title order={4} mt="md" className="title">{title}</Title>
+      <Title order={2} size="h4" mt="md" className="title">{title}</Title>
       <Text size="sm" color="dimmed" mt="xs" className="text">{description}</Text>
     </Card>
   );
@@ -46,15 +46,16 @@ function App() {
     <Container mt="xl" mb="xl">
       <Stack align="center" spacing="xs" mb="xl">
         <Avatar src="josh_pfp_700.png" alt="Josh Manzano" size={120} radius={120}/>
-        <Title order={2} className="title" align="center">
+        <Title order={1} size="h2" className="title" align="center">
           Josh Manzano
         </Title>
+        <Text color="dimmed" className="text" mt={-8}>@joshmzndev</Text>
         <Text size="lg" className="text" align="center" maw={600}>
           Hello there! I'm Josh, a software engineer and AP Instructor. I like building things for small businesses and teaching people about Computer Science or Cybersecurity.
         </Text>
         <Group position="center" spacing={0}>
           <SocialButton name='GitHub' href='https://github.com/joshmzndev' icon={<IconBrandGithub color='black'/>}/>
-          <SocialButton name='LinkedIn' href='https://www.linkedin.com/in/joshmanzano-dev/' icon={<IconBrandLinkedin color='black'/>}/>
+          <SocialButton name='LinkedIn' href='https://www.linkedin.com/in/joshmzndev/' icon={<IconBrandLinkedin color='black'/>}/>
           <SocialButton name='YouTube' href='https://youtube.com/@joshmzndev' icon={<IconBrandYoutube color='black'/>}/>
         </Group>
       </Stack>
